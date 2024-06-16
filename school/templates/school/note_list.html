@@ -1,0 +1,42 @@
+{% extends 'school/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Notes</h1>
+    <div class="row">
+        <div class="col-12">
+            <form class="form-inline mb-3" method="get">
+                <input class="form-control mr-2" type="search" placeholder="Search notes" name="search" value="{{ request.GET.search }}">
+                <select class="form-control mr-2" name="status">
+                    <option value="">Filter by status</option>
+                    <option value="draft" {% if request.GET.status == 'draft' %}selected{% endif %}>Draft</option>
+                    <option value="published" {% if request.GET.status == 'published' %}selected{% endif %}>Published</option>
+                </select>
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in notes %}
+                    <tr>
+                        <td><a href="{% url 'note_detail' note.id %}">{{ note.title }}</a></td>
+                        <td>{{ note.description }}</td>
+                        <td>{{ note.status }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3">No notes found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

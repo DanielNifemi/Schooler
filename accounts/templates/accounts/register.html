@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>Register</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <div id="teacher_form" style="display: none;">
+            {{ teacher_form.as_p }}
+        </div>
+        <div id="student_form" style="display: none;">
+            {{ student_form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const isTeacher = document.querySelector('input[name="is_teacher"]');
+            const isStudent = document.querySelector('input[name="is_student"]');
+            const teacherForm = document.getElementById('teacher_form');
+            const studentForm = document.getElementById('student_form');
+
+            isTeacher.addEventListener('change', function() {
+                if (isTeacher.checked) {
+                    teacherForm.style.display = 'block';
+                    studentForm.style.display = 'none';
+                    isStudent.checked = false;
+                } else {
+                    teacherForm.style.display = 'none';
+                }
+            });
+
+            isStudent.addEventListener('change', function() {
+                if (isStudent.checked) {
+                    studentForm.style.display = 'block';
+                    teacherForm.style.display = 'none';
+                    isTeacher.checked = false;
+                } else {
+                    studentForm.style.display = 'none';
+                }
+            });
+        });
+    </script>
+{% endblock %}
