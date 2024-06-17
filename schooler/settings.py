@@ -18,7 +18,7 @@ SECRET_KEY = '#d+20gpq2dkw8ldk3c_hjh_hois6a8+q#@o01a@x4x==jm#ith'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['.vercel.app', '127.0.0.1']
 
 # Application definition
 INSTALLED_APPS = [
@@ -28,29 +28,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'school',
-    'accounts',
+    'school.apps.SchoolConfig',
+    'accounts.apps.AccountsConfig',
 ]
-SITE_ID = 1
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # For Gmail
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nifemidaniel50@gmail.com'
+EMAIL_HOST_PASSWORD = 'msls rpvf kanw vqvg'
 
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-LOGIN_REDIRECT_URL = '/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/'
-ACCOUNT_AUTHENTICATION_METHOD = 'email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_USERNAME_REQUIRED = False
-
-# Social account settings
-
-
-# Email backend (dummy for development)
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SECURE = True
 
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
@@ -88,8 +78,12 @@ WSGI_APPLICATION = 'schooler.wsgi.application'
 # https://docs.djangoproject.com/en/3.x/ref/settings/#databases
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'wvRiBsrsuyxIFcxADergJLJToVRJktDr',
+        'HOST': 'roundhouse.proxy.rlwy.net',
+        'PORT': '40241',
     }
 }
 
@@ -125,7 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.x/howto/static-files/
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'frontend/static']
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 # Media files
 MEDIA_URL = '/media/'

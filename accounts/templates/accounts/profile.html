@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{{ user.username }}'s Profile</h1>
+    <img src="{{ user.profile_picture.url }}" alt="{{ user.username }}" class="img-thumbnail" width="150">
+    <p>Email: {{ user.email }}</p>
+    <p>Phone Number: {{ user.phone_number }}</p>
+    {% if user.is_teacher %}
+        <h2>Teacher Information</h2>
+        <p>Department: {{ profile.department }}</p>
+        <p>Bio: {{ profile.bio }}</p>
+    {% elif user.is_student %}
+        <h2>Student Information</h2>
+        <p>Grade: {{ profile.grade }}</p>
+        <p>Department: {{ profile.department }}</p>
+        <p>Bio: {{ profile.bio }}</p>
+    {% endif %}
+{% endblock %}

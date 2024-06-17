@@ -129,3 +129,11 @@ def calendar_view(request):
     }
 
     return render(request, 'school/calendar.html', context)
+
+
+def events_view(request):
+    event = get_object_or_404(Event, user=request.user)
+    context = {
+        'event': event,
+    }
+    return render(request, 'school/events.html', context)

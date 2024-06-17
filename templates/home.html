@@ -1,4 +1,4 @@
-{% extends 'school/base.html' %}
+{% extends 'base.html' %}
 
 {% block content %}
 <div class="container-fluid">
@@ -15,7 +15,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Notes</h5>
                     <p class="card-text">Manage your class notes with ease.</p>
-                    <a href="{% url 'note_list' %}" class="btn btn-primary">View Notes</a>
+                    <a href="{% url 'school:notes' %}" class="btn btn-primary">View Notes</a>
                 </div>
             </div>
         </div>
@@ -25,7 +25,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Assignments</h5>
                     <p class="card-text">Keep track of your assignments and deadlines.</p>
-                    <a href="{% url 'assignment_list' %}" class="btn btn-primary">View Assignments</a>
+                    <a href="{% url 'school:assignments' %}" class="btn btn-primary">View Assignments</a>
                 </div>
             </div>
         </div>

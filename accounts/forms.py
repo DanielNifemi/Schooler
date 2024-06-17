@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+
 # from django.contrib.auth.forms import UserCreationForm
 from .models import CustomUser, Teacher, Student
 
@@ -39,9 +41,27 @@ class TeacherForm(forms.ModelForm):
 class StudentForm(forms.ModelForm):
     class Meta:
         model = Student
-        fields = ['grade', 'phone_number', 'major', 'bio']
+        fields = ['grade', 'phone_number', 'department', 'bio']
 
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username', max_length=100)
     password = forms.CharField(label='Password', widget=forms.PasswordInput)
+
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'phone_number', 'profile_picture']
+
+
+class TeacherProfileForm(forms.ModelForm):
+    class Meta:
+        model = Teacher
+        fields = ['phone_number', 'department', 'bio', 'profile_picture']
+
+
+class StudentProfileForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['grade', 'phone_number', 'department', 'bio', 'profile_picture']
