@@ -13,9 +13,6 @@
       "dest": "/static/$1"
     },
     {
-      "src": "requirements.txt"
-    },
-    {
       "src": "/(.*)",
       "dest": "schooler/wsgi.py"
     }
