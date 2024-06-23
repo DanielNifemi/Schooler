@@ -5,7 +5,7 @@
       "src": "manage.py",
       "use": "@vercel/python",
       "config": {
-        "installCommand": "pip install --no-cache-dir -r requirements.txt",
+        "installCommand": "pip install --no-cache-dir -r requirements.txt && pip install psycopg2-binary",
         "buildCommand": "python manage.py collectstatic --noinput && python manage.py migrate",
         "zeroConfig": true
       }
@@ -25,9 +25,9 @@
     { "src": "/(.*)", "dest": "manage.py" }
   ],
   "env": {
-    "SECRET_KEY": "@secret_key",
+    "SECRET_KEY": "#d+20gpq2dkw8ldk3c_hjh_hois6a8+q#@o01a@x4x==jm#ith",
     "DEBUG": "false",
     "ALLOWED_HOSTS": ".vercel.app",
-    "DATABASE_URL": "@database_url"
+    "DATABASE_URL": "postgresql://postgres:eHPBbUNHBibBIWXPazVRLbxScRALvJiZ@monorail.proxy.rlwy.net:33654/railway"
   }
 }
