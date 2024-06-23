@@ -1,4 +1,4 @@
-{% extends 'base.html' %}
+{% extends 'schooler/base.html' %}
 
 {% block content %}
 <div class="container-fluid">
@@ -11,29 +11,27 @@
     <div class="row my-4">
         <div class="col-3">
             <div class="card">
-                <img src="file:///C:/Users/USER/Downloads/v795-tang-51.jpg" class="card-img-top" alt="Note">
+                <img src="img/schooler/note.jpg" class="card-img-top" alt="Note">
                 <div class="card-body">
                     <h5 class="card-title">Notes</h5>
                     <p class="card-text">Manage your class notes with ease.</p>
                     <a href="{% url 'school:notes' %}" class="btn btn-primary">View Notes</a>
-                    <a href="{% url 'school:create_note' %}" class="btn btn-secondary mt-2">Create Note</a>
                 </div>
             </div>
         </div>
         <div class="col-3">
             <div class="card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Assignment">
+                <img src="img/schooler/final-image (1).jpg" class="card-img-top" alt="Assignment">
                 <div class="card-body">
                     <h5 class="card-title">Assignments</h5>
                     <p class="card-text">Keep track of your assignments and deadlines.</p>
                     <a href="{% url 'school:assignments' %}" class="btn btn-primary">View Assignments</a>
-                    <a href="{% url 'school:create_assignment' %}" class="btn btn-secondary mt-2">Create Assignment</a>
                 </div>
             </div>
         </div>
         <div class="col-3">
             <div class="card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Calendar">
+                <img src="img/schooler/final-image (2).jpg" class="card-img-top" alt="Calendar">
                 <div class="card-body">
                     <h5 class="card-title">Calendar</h5>
                     <p class="card-text">Stay organized with our integrated calendar.</p>
@@ -43,7 +41,7 @@
         </div>
         <div class="col-3">
             <div class="card">
-                <img src="https://via.placeholder.com/150" class="card-img-top" alt="Grades">
+                <img src="img/schooler/istockphoto-540987368-1024x1024 (1).jpg" class="card-img-top" alt="Grades">
                 <div class="card-body">
                     <h5 class="card-title">Grades</h5>
                     <p class="card-text">Track your academic progress.</p>

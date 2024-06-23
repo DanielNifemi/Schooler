@@ -1,8 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'schooler/base.html' %}
 
 {% block content %}
 <div class="container">
     <h1>Notes</h1>
+    <!-- Button to navigate to the note creation page -->
+    <div class="mb-3">
+        <a href="{% url 'school:create_note' %}" class="btn btn-primary">Create New Note</a>
+    </div>
     <div class="row">
         <div class="col-12">
             <form class="form-inline mb-3" method="get">
@@ -25,7 +29,7 @@
                 <tbody>
                     {% for note in notes %}
                     <tr>
-                        <td><a href="{% url 'note_detail' note.id %}">{{ note.title }}</a></td>
+                        <td><a href="{% url 'school:note_detail' note.id %}">{{ note.title }}</a></td>
                         <td>{{ note.description }}</td>
                         <td>{{ note.status }}</td>
                     </tr>

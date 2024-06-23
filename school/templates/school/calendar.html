@@ -1,10 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends 'schooler/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Calendar</h1>
+    <style>
+        .calendar {
+            width: 100%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        .calendar th {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+        }
+        .calendar td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+        .calendar td.today {
+            background: #ffc107;
+        }
+    </style>
+    <div class="calendar">
+        {{ calendar_html|safe }}
+    </div>
+    <hr>
+    <h2>Events</h2>
+    {% if events %}
+        <ul class="list-group">
+            {% for event in events %}
+                <li class="list-group-item">
+                    <strong>{{ event.title }}</strong><br>
+                    {{ event.description }}<br>
+                    <em>{{ event.date }}</em>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No events found for this month.</p>
+    {% endif %}
+</div>
+{% endblock %}

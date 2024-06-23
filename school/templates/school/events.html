@@ -1,34 +1,38 @@
-{% extends 'base.html' %}
+{% extends 'schooler/base.html' %}
 
 {% block content %}
-<h1>Events</h1>
-
-{% if events %}
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Date</th>
-            <th>User</th>
-            <th>Created At</th>
-            <th>Updated At</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for event in events %}
-        <tr>
-            <td>{{ event.title }}</td>
-            <td>{{ event.description }}</td>
-            <td>{{ event.date }}</td>
-            <td>{{ event.user }}</td>
-            <td>{{ event.created_at }}</td>
-            <td>{{ event.updated_at }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
-{% else %}
-<p>No events found.</p>
-{% endif %}
+<div class="container">
+    <h1>Events</h1>
+    <!-- Button to create a new event -->
+    <div class="mb-3">
+        <a href="{% url 'school:create_event' %}" class="btn btn-primary">
+            <i class="fas fa-plus-circle"></i>
+        </a>
+    </div>
+    {% if events %}
+        <ul class="list-group">
+            {% for event in events %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5>{{ event.title }}</h5>
+                        <p>{{ event.description }}</p>
+                        <em>{{ event.date }}</em>
+                    </div>
+                    <div>
+                        <!-- Button to edit the event -->
+                        <a href="{% url 'school:update_event' event.pk %}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <!-- Button to delete the event -->
+                        <a href="{% url 'school:delete_event' event.pk %}" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i> Delete
+                        </a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No events found for this month.</p>
+    {% endif %}
+</div>
 {% endblock %}

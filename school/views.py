@@ -1,10 +1,12 @@
 from calendar import HTMLCalendar
-from datetime import timedelta, datetime
+from datetime import datetime, timedelta
 
 from django.contrib import messages
 from django.db.models import Q
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+
+from .forms import EventForm
 from .models import Assignment, Event, Note
 
 
@@ -37,6 +39,36 @@ def note_list(request):
 def note_detail(request, pk):
     note = get_object_or_404(Note, pk=pk, user=request.user)
     return render(request, 'school/note_detail.html', {'note': note})
+
+
+@login_required
+def note_create(request):
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        note = Note.objects.create(title=title, description=description, user=request.user)
+        return redirect('school:note_detail', pk=note.pk)
+    return render(request, 'school/note_form.html')
+
+
+@login_required
+def note_update(request, pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+    if request.method == 'POST':
+        note.title = request.POST['title']
+        note.description = request.POST['description']
+        note.save()
+        return redirect('school:note_detail', pk=note.pk)
+    return render(request, 'school/note_form.html', {'note': note})
+
+
+@login_required
+def note_delete(request, pk):
+    note = get_object_or_404(Note, pk=pk, user=request.user)
+    if request.method == 'POST':
+        note.delete()
+        return redirect('school:notes')
+    return render(request, 'school/note_confirm_delete.html', {'note': note})
 
 
 @login_required
@@ -82,7 +114,7 @@ def assignment_create(request):
         due_date = request.POST['due_date']
         assignment = Assignment.objects.create(title=title, description=description, due_date=due_date,
                                                user=request.user)
-        return redirect('assignment_detail', pk=assignment.pk)
+        return redirect('school:assignment_detail', pk=assignment.pk)
     return render(request, 'school/assignment_form.html')
 
 
@@ -94,7 +126,7 @@ def assignment_update(request, pk):
         assignment.description = request.POST['description']
         assignment.due_date = request.POST['due_date']
         assignment.save()
-        return redirect('assignment_detail', pk=assignment.pk)
+        return redirect('school:assignment_detail', pk=assignment.pk)
     return render(request, 'school/assignment_form.html', {'assignment': assignment})
 
 
@@ -103,7 +135,7 @@ def assignment_delete(request, pk):
     assignment = get_object_or_404(Assignment, pk=pk, user=request.user)
     if request.method == 'POST':
         assignment.delete()
-        return redirect('assignment_list')
+        return redirect('school:assignments')
     return render(request, 'school/assignment_confirm_delete.html', {'assignment': assignment})
 
 
@@ -131,9 +163,47 @@ def calendar_view(request):
     return render(request, 'school/calendar.html', context)
 
 
+@login_required
+def create_event(request):
+    if request.method == 'POST':
+        form = EventForm(request.POST)
+        if form.is_valid():
+            event = form.save(commit=False)
+            event.user = request.user
+            event.save()
+            messages.success(request, 'Event created successfully!')
+            return redirect('school:events')
+    else:
+        form = EventForm()
+    return render(request, 'school/event_form.html', {'form': form})
+
+
+@login_required
+def update_event(request, pk):
+    event = get_object_or_404(Event, pk=pk, user=request.user)
+    if request.method == 'POST':
+        form = EventForm(request.POST, instance=event)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Event updated successfully!')
+            return redirect('school:events')
+    else:
+        form = EventForm(instance=event)
+    return render(request, 'school/event_form.html', {'form': form})
+
+@login_required
+def delete_event(request, pk):
+    event = get_object_or_404(Event, pk=pk, user=request.user)
+    if request.method == 'POST':
+        event.delete()
+        messages.success(request, 'Event deleted successfully!')
+        return redirect('school:events')
+    return render(request, 'school/event_confirm_delete.html', {'event': event})
+
+@login_required
 def events_view(request):
-    event = get_object_or_404(Event, user=request.user)
+    events = Event.objects.filter(user=request.user)
     context = {
-        'event': event,
+        'events': events,
     }
     return render(request, 'school/events.html', context)

@@ -21,7 +21,7 @@ def register_view(request):
             student.user = user
             teacher.save()
             student.save()
-            return redirect('login')
+            return redirect('accounts:login')
     else:
         user_form = RegistrationForm()
         teacher_form = TeacherForm()
@@ -56,7 +56,7 @@ def login_view(request):
 def logout_view(request):
     auth_logout(request)
     messages.success(request, 'You have been logged out.')
-    return redirect('login')
+    return redirect('accounts:login')
 
 
 @login_required
@@ -89,7 +89,7 @@ def edit_profile_view(request):
             if profile_form:
                 profile_form.save()
             messages.success(request, 'Your profile was successfully updated!')
-            return redirect('profile', username=user.username)
+            return redirect('accounts:profile', username=user.username)
     else:
         user_form = UserProfileForm(instance=user)
         if user.is_teacher:
